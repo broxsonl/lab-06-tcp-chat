@@ -16,20 +16,20 @@ const pool = [];
 const server = net.createServer();
 const ee = new EE();
 
-ee.on('\\nick', function(client, string){
+ee.on('\/nick', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     pool[i].socket.write(`${client.nickname} has changed their nickname to ` + string +'\n');
   }
   client.nickname = string.trim();
 });
 
-ee.on('\\all', function(client, string){
+ee.on('\/all', function(client, string){
   pool.forEach( c => {
     c.socket.write(`${client.nickname}:` + string);
   });
 });
 
-ee.on('\\dm', function(client, string){
+ee.on('\/dm', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     if (string.split(' ')[0] === pool[i].nickname) {
       client.socket.write(`${client.nickname}(DM to ${pool[i].nickname}):` + string.split(' ').slice(1).join(' '));
@@ -54,7 +54,7 @@ server.on('connection', function(socket){
   socket.on('data', function(data) {
     const command = data.toString().split(' ').shift().trim();
 
-    if (command.startsWith('\\')) {
+    if (command.startsWith('\/')) {
       ee.emit(command, client, data.toString().split(' ').slice(1).join(' '));
       return;
     }
