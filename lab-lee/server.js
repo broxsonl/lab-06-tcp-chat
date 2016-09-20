@@ -45,6 +45,9 @@ ee.on('default', function(client, string){
 server.on('connection', function(socket){
   var client = new Client(socket);
   pool.push(client);
+  for (var i = 0; i < pool.length; i++) {
+    pool[i].socket.write(`${client.nickname} has joined the chat!\n`);
+  }
   socket.on('data', function(data) {
     const command = data.toString().split(' ').shift().trim();
 
