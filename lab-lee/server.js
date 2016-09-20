@@ -68,8 +68,8 @@ ee.on('\/dm', function(client, string){
 });
 
 // if no / command is given, produces an error
-ee.on('default', function(client, string){
-  client.socket.write('not a command');
+ee.on('default', function(client){
+  client.socket.write('Invalid Input. Type /help for a list of valid ones');
 });
 
 // module logic
@@ -90,7 +90,7 @@ server.on('connection', function(socket){
   });
 
   // when an error occurs...
-  socket.on('error', (err) => {
+  socket.on('error', function(err) {
     console.error(err);
   });
 
