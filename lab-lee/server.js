@@ -46,13 +46,11 @@ ee.on('\/room', function(client){
 // displays a list of user / commands
 ee.on('\/help', function(client){
   client.socket.write('User Chat Commands:\n');
-  for (var i = 0; i < pool.length; i++) {
-    client.socket.write(`
-      /all [message] <--sends chat to room\n
-      /nick [nickname] <--changes current nickname\n
-      /room <--displays all current room participants\n
-      /dm [username] <--sends direct message to only specified user\n`);
-  }
+  client.socket.write(`
+    /all [message] <--sends chat to room\n
+    /nick [nickname] <--changes current nickname\n
+    /room <--displays all current room participants\n
+    /dm [username] <--sends direct message to only specified user\n`);
 });
 
 // sends direct message only to the specified user
