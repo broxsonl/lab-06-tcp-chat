@@ -8,13 +8,33 @@ This project's purpose is to create a locally hosted chat server that allows sev
 
 `server.js` handles the logic for creating the server, handling user input, and appropriately displaying the correct messages to other users.
 
-Once connected to the chat, you may run `/help` for a list of available chat commands.
-
 **How to Run this Project**
 
 Check out the [package.json] (https://github.com/broxsonl/lab-06-tcp-chat/blob/master/lab-lee/package.json) file for the project to see the specific Developer Dependencies required to run this project. Or, enter the following command in your local copy of the repository:
 
         npm  i -D eslint gulp-eslint gulp-mocha mocha mocha-eslint
+
+The following commands can be run from within the chat:
+
+        /all Some Text
+
+Writing /all before your chat will send your chat to all members in the room.
+
+        /dm [username] Some Text
+
+Writing /dm with a username following it will send your message to only the specified user, or provide an error if the user does not exist.
+
+        /nick [newname]
+
+Writing /dm with a username following it will change your chat's display name to whatever you choose if it is not already taken.
+
+        /room
+
+The /room command will show a list of all the current chatroom participants.
+
+        /help
+
+The help command will provide a list of the available chat commands for use.
 
 **How to connect to the server**
 
