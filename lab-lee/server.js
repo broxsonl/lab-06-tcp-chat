@@ -16,6 +16,7 @@ const pool = [];
 const server = net.createServer();
 const ee = new EE();
 
+// changes user nickname if it isn't already taken
 ee.on('\/nick', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     if(string.trim() === pool[i].nickname) {
@@ -27,16 +28,30 @@ ee.on('\/nick', function(client, string){
   client.nickname = string.trim();
 });
 
+// sends message to all room participants
 ee.on('\/all', function(client, string){
   pool.forEach( c => {
     c.socket.write(`${client.nickname}:` + string);
   });
 });
 
-ee.on('\/room', function(client, string){
+// displays all current members of the chatroom
+ee.on('\/room', function(client){
   client.socket.write('Current Participants:\n');
   for (var i = 0; i < pool.length; i++) {
     client.socket.write(`${pool[i].nickname}\n`);
+  }
+});
+
+// displays a list of user / commands
+ee.on('\/help', function(client, string){
+  client.socket.write('User Chat Commands:\n');
+  for (var i = 0; i < pool.length; i++) {
+    client.socket.write(`
+      /all [message] <--sends chat to room\n
+      /nick [nickname] <--changes current nickname\n
+      /room <--displays all current room participants\n
+      /dm [username] <--sends direct message to only specified user\n`);
   }
 });
 
