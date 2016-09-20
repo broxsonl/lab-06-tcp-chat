@@ -20,7 +20,7 @@ const ee = new EE();
 ee.on('\/nick', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     if(string.trim() === pool[i].nickname) {
-      client.socket.write(`${string} already exists. Please choose a different nickname`);
+      client.socket.write(`${string} already exists. Please choose a different nickname\n`);
       return;
     }
     pool[i].socket.write(`${client.nickname} has changed their nickname to ` + string +'\n');
@@ -44,7 +44,7 @@ ee.on('\/room', function(client){
 });
 
 // displays a list of user / commands
-ee.on('\/help', function(client, string){
+ee.on('\/help', function(client){
   client.socket.write('User Chat Commands:\n');
   for (var i = 0; i < pool.length; i++) {
     client.socket.write(`
@@ -89,7 +89,7 @@ server.on('connection', function(socket){
     ee.emit('default', client, data.toString());
   });
 
-  // when an error occurs...
+  // when an error occurs
   socket.on('error', function(err) {
     console.error(err);
   });
