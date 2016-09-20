@@ -33,6 +33,13 @@ ee.on('\/all', function(client, string){
   });
 });
 
+ee.on('\/room', function(client, string){
+  client.socket.write('Current Participants:\n');
+  for (var i = 0; i < pool.length; i++) {
+    client.socket.write(`${pool[i].nickname}\n`);
+  }
+});
+
 ee.on('\/dm', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     if (string.split(' ')[0] === pool[i].nickname) {
