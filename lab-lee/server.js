@@ -29,13 +29,12 @@ ee.on('\\all', function(client, string){
 ee.on('\\dm', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     if (string.split(' ')[0] === pool[i].nickname) {
-      client.socket.write(`${client.nickname}(DM):` + string);
-      pool[i].socket.write(`(DM from ${client.nickname}):` + string);
+      client.socket.write(`${client.nickname}(DM to ${pool[i].nickname}):` + string.split(' ').slice(1).join(' '));
+      pool[i].socket.write(`(DM from ${client.nickname}):` + string.split(' ').slice(1).join(' '));
+      return;
     }
   }
-    // else {
-    //   client.socket.write(`Sorry, ${client.nickname}, that is not a valid user to DM.`);
-  // }
+  client.socket.write(`Sorry, ${client.nickname}, that is not a valid user to DM.`);
 });
 
 ee.on('default', function(client, string){
