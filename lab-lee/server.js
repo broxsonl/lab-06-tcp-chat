@@ -90,8 +90,8 @@ server.on('connection', function(socket){
   });
 
   // when an error occurs...
-  socket.on('error', function(error) {
-
+  socket.on('error', (err) => {
+    console.error(err);
   });
 
 // when someone leaves, the chat is informed and they are removed from pool
