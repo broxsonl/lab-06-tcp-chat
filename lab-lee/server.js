@@ -18,6 +18,10 @@ const ee = new EE();
 
 ee.on('\/nick', function(client, string){
   for (var i = 0; i < pool.length; i++) {
+    if(string.trim() === pool[i].nickname) {
+      client.socket.write(`${string} already exists. Please choose a different nickname`);
+      return;
+    }
     pool[i].socket.write(`${client.nickname} has changed their nickname to ` + string +'\n');
   }
   client.nickname = string.trim();
