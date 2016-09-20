@@ -17,6 +17,9 @@ const server = net.createServer();
 const ee = new EE();
 
 ee.on('\\nick', function(client, string){
+  for (var i = 0; i < pool.length; i++) {
+    pool[i].socket.write(`${client.nickname} has changed their nickname to ` + string +'\n');
+  }
   client.nickname = string.trim();
 });
 
