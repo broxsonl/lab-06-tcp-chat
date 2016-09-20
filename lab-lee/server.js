@@ -94,13 +94,13 @@ server.on('connection', function(socket){
 
 // when someone leaves, the chat is informed and they are removed from pool
   socket.on('close', function(){
-    for (var i = 0; i < pool.length; i++) {
-      pool[i].socket.write(`${client.nickname} has exited the chat\n`);
-    }
     for (i = 0; i < pool.length; i++) {
       if(pool[i] === client) {
-        pool.splice(pool[i], 1);
+        pool.splice(i, 1);
       }
+    }
+    for (var i = 0; i < pool.length; i++) {
+      pool[i].socket.write(`${client.nickname} has exited the chat\n`);
     }
   });
 });
