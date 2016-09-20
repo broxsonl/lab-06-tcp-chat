@@ -55,6 +55,7 @@ ee.on('\/help', function(client, string){
   }
 });
 
+// sends direct message only to the specified user
 ee.on('\/dm', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     if (string.split(' ')[0] === pool[i].nickname) {
@@ -66,6 +67,7 @@ ee.on('\/dm', function(client, string){
   client.socket.write(`Sorry, ${client.nickname}, that is not a valid user to DM.`);
 });
 
+// if no / command is given, produces an error
 ee.on('default', function(client, string){
   client.socket.write('not a command');
 });
@@ -86,14 +88,26 @@ server.on('connection', function(socket){
     }
     ee.emit('default', client, data.toString());
   });
+
+  // when an error occurs...
   socket.on('error', function(error) {
 
   });
+
+// when someone leaves, the chat is informed and they are removed from pool
   socket.on('close', function(){
-    ee.emit('');
+    for (var i = 0; i < pool.length; i++) {
+      pool[i].socket.write(`${client.nickname} has exited the chat\n`);
+    }
+    for (i = 0; i < pool.length; i++) {
+      if(pool[i] === client) {
+        pool.splice(pool[i], 1);
+      }
+    }
   });
 });
 
+// when the server turns on, log it to the console
 server.listen(PORT, function(){
   console.log('server running on port', PORT);
 });
