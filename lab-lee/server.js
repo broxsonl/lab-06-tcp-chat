@@ -31,7 +31,7 @@ ee.on('\/nick', function(client, string){
 // sends message to all room participants
 ee.on('\/all', function(client, string){
   pool.forEach( c => {
-    c.socket.write(`${client.nickname}:` + string);
+    c.socket.write(`${client.nickname}: ` + string);
   });
 });
 
@@ -59,8 +59,8 @@ ee.on('\/help', function(client, string){
 ee.on('\/dm', function(client, string){
   for (var i = 0; i < pool.length; i++) {
     if (string.split(' ')[0] === pool[i].nickname) {
-      client.socket.write(`${client.nickname}(DM to ${pool[i].nickname}):` + string.split(' ').slice(1).join(' '));
-      pool[i].socket.write(`(DM from ${client.nickname}):` + string.split(' ').slice(1).join(' '));
+      client.socket.write(`${client.nickname}(DM to ${pool[i].nickname}): ` + string.split(' ').slice(1).join(' '));
+      pool[i].socket.write(`(DM from ${client.nickname}): ` + string.split(' ').slice(1).join(' '));
       return;
     }
   }
